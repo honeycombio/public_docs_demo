@@ -1,0 +1,11 @@
+<div class="show-logged-in">
+{{ if (.Get 0) "writekey-was-filled" }}
+<p>
+You are currently logged in to the
+<code><span class="current-team-fill"></span></code> team,
+so we have populated the write key here to the first write key for that team.
+</p>
+{{ else }}
+{{ .Inner }}
+{{ end }}
+</div>

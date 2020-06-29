@@ -1,0 +1,15 @@
+@media print {
+  .docs .sidebar {
+    display: none;
+  }
+
+  .docs .docs-content {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+
+  #header {
+    display: none;
+  }
+}

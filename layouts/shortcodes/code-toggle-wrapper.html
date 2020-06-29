@@ -1,0 +1,25 @@
+{{/*
+  Intended for wrapping inline code in content/*.md files directly, without
+  having to define a separate partial template.
+
+  If you need to use Golang template niceties, or you want the content to be
+  in a partial (e.g. for reuse in multiple documents), use
+  `code-toggle-template` instead.
+
+  Wrap {{< code-toggle-content >}} shortcodes containing code samples.
+
+  USAGE: Specify the following params:
+  - "id", a prefix for the tab `id`s in the DOM for the JavaScript to target
+    toggling. Should be unique if you have multiple <code-toggle>s on a single
+    page.
+  - "tabs", the set of suffixes on the `id`s in the content DOM to be toggled
+*/ -}}
+{{ $tabs := split (.Get "tabs") "," -}}
+<div id="{{ .Get "id" }}-nav" class="code-toggle-nav {{ with .Get "class" }}{{ . }}{{ else }}code{{ end }}">
+{{ range $i, $tab := $tabs -}}
+  <a class="{{ if eq 0 $i }}active{{ else }}hidden{{ end }}" href="#">{{ $tab }}</a>
+{{ end -}}
+</div>
+<div id="{{ .Get "id" }}-content" class="code-toggle-content {{ with .Get "class" }}{{ . }}{{ else }}code{{ end }}">
+{{- .Inner -}}
+</div>

@@ -1,0 +1,45 @@
+<input class="menu-btn" type="checkbox" id="menu-btn" />
+<label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+<nav class="sidebar" id="docs-sidebar">
+{{ partial "search.html" "docs" }}
+
+<div class="topics">
+{{- $current := . }}
+{{- .Scratch.Set "items" .Site.Sections.ByWeight }}
+{{- .Scratch.Set "title" "Documentation" }}
+
+{{- if .CurrentSection }}
+  {{- .Scratch.Set "items" (union .CurrentSection.Sections (where .CurrentSection.Pages "Params.hidden" "!=" "true")) }}
+  {{- .Scratch.Set "title" .CurrentSection.Title }}
+  {{- .Scratch.Set "parent" .CurrentSection.Parent }}
+{{- end }}
+
+  {{- with .Scratch.Get "parent" }}
+  <div class="sidebar-back">◂ <a href="{{ .URL }}">{{ .LinkTitle }}</a></div>
+  {{- end }}
+  <div class="sidebar-section-header">{{ .Scratch.Get "title" }}</div>
+  {{- if and .IsNode (not .Params.hidetoc) }}
+    {{- .TableOfContents }}
+  {{- end }}
+
+  {{- range (.Scratch.Get "items").ByWeight }}{{ if .Title }}
+  <a class="sidebar-link{{ if eq . $current }} active{{ end }}" href="{{ .URL }}">{{ .LinkTitle }}</a>
+    {{- if and (eq . $current) (not .Params.hidetoc) }}
+      {{- .TableOfContents }}
+    {{- end }}
+  {{- end }}{{ end }}
+
+  <div class="sidebar-section-header">Support</div>
+  <a class="sidebar-link" href="mailto:support@honeycomb.io">Contact Support</a>
+</div>
+
+</nav>
+<script type="text/javascript">
+  (function() {
+    let active = document.querySelector(".topics .sidebar-link.active");
+    let sidebar = document.querySelector(".topics");
+    if (active && sidebar) {
+      sidebar.scrollTop = (active.getBoundingClientRect().top - sidebar.getBoundingClientRect().top);
+    }
+  })();
+</script>

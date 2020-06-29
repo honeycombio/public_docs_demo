@@ -1,0 +1,6 @@
+<a href="{{ with .Get "href" }}{{ . }}{{ else }}{{ .Get "src" }}{{ end }}" class="screenshot-row{{ with .Get "class" }} {{ . }}{{ end }}">
+    <img src="{{ .Get "src" }}"
+         {{ with .Get "alt" }}alt="{{ . }}"{{ end }}
+         {{ with .Get "src2x" }}srcset="{{ . }} 2x"{{ end }} />
+    {{ with .Get "caption" }}<div class="caption">{{ . }}</div>{{ end }}
+  </a>

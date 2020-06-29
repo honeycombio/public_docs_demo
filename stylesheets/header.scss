@@ -1,0 +1,114 @@
+/* Nav Header (should absolutely be shared with poodle)
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+#header {
+    color: $contentGrey;
+    top: 0;
+    left: 0;
+    height: $navHeight;
+    width: 96%;
+    display: flex;
+    align-items: center;
+    padding: 0 2% 0 2%;
+    @include respond-lt-desktop {
+        height: $narrowNavHeight;
+    }
+
+    #signup {
+        align-items: center;
+        justify-content: flex-end;
+        flex: 400px;
+        display: flex;
+        &.loggedin {
+            flex: inherit;
+        }
+
+        a {
+            &:last-child {
+                margin-left: 40px;
+            }
+        }
+        .btn-large {
+            font-size: 1.7rem;
+            font-weight: 500;
+        }
+        .gravatar {
+            display: inline-block;
+            background-size: contain;
+            vertical-align: middle;
+            width: 44px;
+            height: 44px;
+            border: 2px solid #20bdbe;
+            border-radius: 10px;
+        }
+    }
+
+    #nav {
+        display: flex;
+        flex: 100%;
+        align-items: center;
+        li {
+            display: inline-block;
+            margin-left: 40px;
+            padding-top: 14px;
+        }
+        a, label {
+            color: $contentGrey;
+            &:hover {
+                color: $action;
+            }
+        }
+    }
+}
+
+.navActive {
+    font-weight: 500;
+}
+
+.fix-nav {
+    border-bottom: 1px solid $borderColor;
+}
+@include respond-lt-desktop {
+    .navactive {
+      padding-bottom: 0;
+    }
+
+    #header {
+        height: 64px;
+        padding: 0 10px;
+        width: 100%;
+
+        #signup {
+            display: none;
+        }
+
+        #nav {
+            display: flex;
+            flex: 100%;
+            align-items: right;
+            ul {
+                flex: 1;
+                text-align: right;
+            }
+            li {
+                display: inline-block;
+                margin-right: 20px;
+                margin-left: 0;
+                &:nth-child(n+5) {
+                    display: none;
+                }
+            }
+        }
+    }
+    .product-dropdown ul {
+        right: 0;
+    }
+}
+
+@include respond-lt-tablet {
+    #nav {
+        ul {
+            display: none;
+        }
+    }
+}

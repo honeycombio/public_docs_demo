@@ -1,0 +1,13 @@
+baseurl = "https://docs.honeycomb.io"
+languageCode = "en-us"
+title = "Docs"
+pygmentscodefences = true
+pygmentsuseclasses = true
+pluralizelisttitles = false
+#enableEmoji = true
+[params]
+  description = "Documentation for Honeycomb, a real-time systems debugging platform"
+
+# Borrowed wildly from:
+# github.com/jpescador/hugo-future-imperfect (blog)
+# github.com/matcornic/hugo-theme-learn (docs)

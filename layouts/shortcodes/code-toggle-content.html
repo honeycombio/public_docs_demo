@@ -1,0 +1,3 @@
+<div id="{{ with .Parent }}{{ .Get "id" }}{{ end }}-{{ .Get "tab" }}" {{ if .Get "active" }} class="active"{{ end }}>
+{{ .Inner }}
+</div>

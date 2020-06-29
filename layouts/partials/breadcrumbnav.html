@@ -1,0 +1,12 @@
+<ol class="breadcrumb-bar">
+  {{- template "breadcrumbnav" (dict "ptr" . "pg" .) }}
+</ol>
+
+{{- define "breadcrumbnav" }}
+  {{- if .ptr.Parent }}
+    {{- template "breadcrumbnav" (dict "ptr" .ptr.Parent "pg" .pg )  }}
+  {{- end }}
+  <li{{ if eq .ptr .pg }} class="active"{{ end }}>
+    <a href="{{ .ptr.Permalink }}">{{ .ptr.LinkTitle }}</a>
+  </li>
+{{- end }}

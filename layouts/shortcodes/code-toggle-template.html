@@ -1,0 +1,22 @@
+{{/*
+  Intended to be used if you want to take advantage of Go template needs,
+  e.g. variables, or for use in layout partials (not content/*.md files
+  directly).
+
+  If you need to use this shortcode directly in templates, or don't care about
+  reusing the contents, use `code-toggle-wrapper` instead.
+
+  USAGE: Specify the following params:
+  - "id", a prefix for the tab `id`s in the DOM for the JavaScript to target toggling. Should be unique if you have multiple <code-toggle>s on a single page.
+  - "tabs", the set of suffixes on the `id`s in the content DOM to be toggled
+  - "content", the path to a content file containing the content to be tabbed between
+  - "bin", an optional parameter used to specify a binary if the deb, rpm, etc. bundles multiple (used for AWS bundle)
+*/ -}}
+{{ .Scratch.Add "bin" (.Get "bin") -}}
+{{ $tabs := split (.Get "tabs") "," -}}
+<div id="{{ .Get "id" }}-nav" class="code-toggle-nav {{ with .Get "class" }}{{ . }}{{ else }}code{{ end }}">
+{{ range $i, $tab := $tabs -}}
+  <a class="{{ if eq 0 $i }}active{{ else }}hidden{{ end }}" href="#">{{ $tab }}</a>
+{{ end -}}
+</div>
+{{ partial (.Get "content") . -}}

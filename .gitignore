@@ -1,0 +1,13 @@
+.DS_Store
+static/main*.css
+static/main*.js
+static/print*.css
+static/print*.js
+.sass-cache/
+public
+node_modules
+npm-debug.log
+*~
+*.swp
+package-lock.json
+_*/

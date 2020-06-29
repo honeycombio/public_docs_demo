@@ -1,0 +1,9 @@
+<form method="GET" action="https://www.google.com/search" class="inputform search" target="_blank" novalidate>
+  <input type="hidden" name="q" value="site:honeycomb.io/{{ . }}">
+  <input class="search" type="text" name="q"
+    id="search-{{ . }}"
+    placeholder="Search..." />
+  {{ if eq . "blog" }}
+      <input type="submit" value="SEARCH">
+  {{ end }}
+</form>

@@ -1,0 +1,581 @@
+@import "./global.scss";
+
+$hrColor: darken($almostWhite, 15%);
+$docsSidebarWidthSmall: 50px;
+$docsSidebarWidthMed: 200px;
+$docsSidebarWidthWide: 320px;
+
+$preTopMargin: 20px;
+
+@mixin expandedSidebar {
+  .sidebar {
+    width: $docsSidebarWidthMed;
+    @include respond-gte-widescreen {
+      width: $docsSidebarWidthWide;
+    }
+  }
+  .docs-content {
+    left: $docsSidebarWidthMed;
+    @include respond-gte-widescreen {
+      left: $docsSidebarWidthWide;
+    }
+  }
+}
+
+@mixin collapsedSidebar {
+  .sidebar {
+    padding-top: 30px;
+    width: $docsSidebarWidthSmall;
+    ul.topics {
+      display: none;
+    }
+  }
+  .docs-content {
+    left: $docsSidebarWidthSmall;
+  }
+}
+
+.screenshot {
+  display: block;
+  text-align: center;
+  img {
+    @include boxShadow;
+    @include blogImgScreenshot;
+  }
+  .caption {
+    display: inline-block;
+    font-size: 0.75em;
+    line-height: 1.5em;
+    color: $contentGrey;
+    width: 80%;
+    margin-top: 1em;
+  }
+}
+
+.screenshot-row {
+  display: inline-block;
+  text-align: center;
+  img {
+    @include boxShadow;
+    @include blogImgScreenshot;
+  }
+  .caption {
+    display: inline-block;
+    font-size: 0.75em;
+    line-height: 1.5em;
+    color: $contentGrey;
+    width: 80%;
+    margin-top: 1em;
+  }
+}
+
+twitterwidget {
+  margin: auto;
+}
+
+.docs {
+  p,
+  hr,
+  blockquote,
+  table,
+  .screenshot {
+    margin-bottom: 2.4rem;
+  }
+  .screenshot {
+    margin: 2.4rem 0;
+  }
+
+  .img-sm {
+    width: 40px;
+    float: left;
+    margin: 20px 25px 20px 15px;
+  }
+
+  blockquote {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0 1em;
+    border-left: 0.25em solid $midgrey;
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  hr {
+    width: 100%;
+  }
+
+  pre {
+    background: $codeBgColor;
+    padding: 3rem;
+    tab-size: 24px;
+    margin: $preTopMargin -1.5rem $preTopMargin -1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    code {
+      color: white;
+      font-size: 1.1rem;
+      line-height: 2.4rem;
+    }
+  }
+  @include respond-lt-tablet {
+    pre {
+      padding: 3rem 1.5rem;
+      margin-right: -3rem;
+      max-width: 100%;
+      tab-size: 12px;
+      code {
+        font-size: 1rem;
+      }
+    }
+  }
+  .headline-hash {
+    font-size: 1.5rem;
+    visibility: hidden;
+  }
+  h1:hover a,
+  h2:hover a,
+  h3:hover a,
+  h4:hover a {
+    visibility: visible;
+  }
+}
+.docs-content {
+  ul,
+  ol {
+    margin-left: 40px;
+  }
+  ul li {
+    list-style-type: disc;
+  }
+  ol li {
+    list-style-type: decimal;
+  }
+  li {
+    margin: 1.2rem 0;
+    p {
+      margin-bottom: 0;
+    }
+  }
+  a.btn-primary {
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.docs {
+  position: relative;
+
+  h2 {
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: 1px solid $borderColor;
+  }
+  h4 {
+    margin-bottom: 1em;
+    font-weight: bold;
+  }
+  hr {
+    border-top: 1px solid $borderColor;
+    border-bottom: 0;
+  }
+
+  .menu-icon,
+  .menu-btn {
+    display: none;
+  }
+
+  @include expandedSidebar;
+  @include respond-lt-tablet {
+    @include collapsedSidebar;
+
+    .menu-icon {
+      display: inline-block;
+      position: absolute;
+      padding: 21px 18px 28px;
+      top: 0;
+      left: 0;
+      z-index: 5;
+    }
+    .menu-icon .navicon {
+      display: block;
+      background-color: $contentGrey;
+      height: 2px;
+      position: relative;
+      width: 18px;
+      &:before,
+      &:after {
+        position: absolute;
+        display: block;
+        content: "";
+        background-color: $contentGrey;
+        height: 100%;
+        width: 100%;
+      }
+      &:before {
+        top: 5px;
+      }
+      &:after {
+        top: -5px;
+      }
+    }
+    .menu-btn {
+      display: none;
+      &:checked {
+        & ~ .sidebar {
+          width: $docsSidebarWidthMed;
+          @include respond-gte-widescreen {
+            width: $docsSidebarWidthWide;
+          }
+          z-index: 4;
+          ul.topics {
+            display: block;
+          }
+        }
+        & ~ .menu-icon .navicon {
+          background: transparent;
+          &:before,
+          &:after {
+            top: 0;
+          }
+        }
+      }
+    }
+    form.search {
+      display: none;
+    }
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: $navHeight + 1;
+    @include respond-lt-desktop {
+      top: $narrowNavHeight + 1;
+    }
+    bottom: 0;
+    background-color: $combineGrey;
+    border-right: 1px solid $borderColor;
+    padding: 30px;
+    box-sizing: border-box;
+    z-index: 1;
+    @include respond-lt-tablet {
+      position: absolute;
+      top: 0;
+    }
+
+    input.search {
+      display: block;
+      font-size: 1.4rem;
+      line-height: 2.4rem;
+      border-radius: 6px;
+      color: $contentGrey;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+    }
+
+    .topics {
+      overflow-y: auto;
+    }
+
+    .sidebar-back {
+      font-size: 0.75em;
+      margin-top: 2.4rem;
+      text-transform: uppercase;
+      font-weight: 500;
+      a {
+        color: $contentGrey;
+      }
+    }
+    .sidebar-section-header {
+      display: block;
+      margin-top: 2.4rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: $shade;
+    }
+    .sidebar-link {
+      line-height: 3rem;
+      display: block;
+      &:hover {
+        background-color: darken($almostWhite, 3%);
+      }
+      &.active {
+        font-weight: 500;
+      }
+    }
+    a {
+      color: $contentGrey;
+    }
+    nav#TableOfContents {
+      // produced by hugo
+      font-size: 1.4rem;
+      line-height: 2.4rem;
+      ul {
+        margin-left: 20px;
+      }
+      > ul {
+        margin-left: 0;
+      }
+      ul > li > ul > li > ul > li > ul {
+        display: none;
+      } // hide h4 headers
+    }
+  }
+  .docs-content {
+    position: fixed;
+    top: $navHeight + 1;
+    z-index: 0;
+    @include respond-lt-desktop {
+      top: $narrowNavHeight + 1;
+    }
+    bottom: 0;
+    right: 0;
+    overflow-y: auto;
+    padding: 40px 25% 0 80px;
+    @media (max-width: 1400px) {
+      padding: 40px 80px 0;
+    }
+    @include respond-lt-widescreen {
+      padding: 40px 60px 0;
+    }
+    @include respond-lt-desktop {
+      padding: 30px 30px 0;
+    }
+
+    @include respond-lt-tablet {
+      position: relative;
+      top: 0;
+      margin-right: $docsSidebarWidthSmall;
+    }
+
+    .breadcrumb-bar {
+      margin-left: 0;
+      li {
+        display: inline-block;
+        font-size: 0.75em;
+        text-transform: uppercase;
+        &:before {
+          content: "▸";
+          color: $grey;
+          margin: 0 0.25em;
+        }
+        &:first-child {
+          &:before {
+            content: none;
+          }
+        }
+        &:last-child {
+          a {
+            color: $contentGrey;
+          }
+        }
+
+        a {
+          color: $grey;
+        }
+      }
+    }
+
+    .section-list {
+      display: flex;
+      flex-wrap: wrap;
+      > a {
+        width: 250px;
+        color: $contentGrey;
+        border: 1px solid $borderColor;
+        padding: 1em;
+        margin: 0 1em 1em 0;
+        &:hover {
+          color: lighten($contentGrey, 20%);
+        }
+        .section-title {
+          margin-top: 0.5em;
+          margin-bottom: 1em;
+          font-size: 1.2em;
+        }
+        .section-icon {
+          display: block;
+          margin: 0 auto;
+        }
+        .section-description {
+          font-size: 0.85em;
+          line-height: 1.5em;
+        }
+      }
+    }
+
+    .schema-table {
+      table {
+        font-family: $monospace;
+        font-size: 1.4rem;
+      }
+    }
+    .acls-table {
+      table,
+      th,
+      td {
+        border: 0px;
+      }
+      table {
+        width: 100%;
+        thead tr:nth-child(odd),
+        tbody tr:nth-child(even) {
+          background-color: $combineGrey;
+        }
+        th {
+          padding: 10px 0;
+        }
+        td {
+          text-align: center;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          &:first-child {
+            width: 50%;
+            text-align: left;
+          }
+        }
+      }
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-bottom: 1.5em;
+      line-height: 2.4rem;
+    }
+    table,
+    th,
+    td {
+      border: 1px solid $midgrey;
+    }
+    th,
+    td {
+      padding: 0 1em;
+    }
+    img {
+      max-width: 100%;
+    }
+  }
+  .logo-bar {
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    flex-flow: row wrap;
+    margin: 20px 0 30px;
+    > div {
+      width: 200px;
+      text-align: center;
+      font-size: 1.3rem;
+      line-height: 2.1rem;
+      margin-bottom: 1.3rem;
+      margin-right: 1.3rem;
+    }
+    a {
+      color: $contentGrey;
+    }
+  }
+
+  .code-toggle-nav {
+    display: flex;
+    &.code {
+      font-family: $monospace;
+      text-transform: uppercase;
+      font-size: 1.4rem;
+      margin-bottom: -$preTopMargin;
+      a {
+        padding: 0 9px;
+        &.active {
+          background-color: $codeBgColor;
+          color: white;
+        }
+      }
+    }
+    &.prose {
+      border-bottom: 1px solid $midgrey;
+      margin-bottom: 24px;
+      a {
+        text-transform: capitalize;
+        color: $grey;
+        padding: 8px 12px 12px;
+        &:first-child {
+          padding-left: 0;
+        }
+        &.active {
+          color: $contentGrey;
+        }
+      }
+    }
+    a {
+      display: inline-block;
+      font-weight: 500;
+      user-select: none;
+    }
+  }
+
+  .code-toggle-content {
+    > div {
+      display: none;
+      &.active {
+        display: block;
+        margin-top: $preTopMargin;
+      }
+    }
+  }
+
+  .logged-in-only {
+    display: none;
+  }
+
+  & .docs-footer-legal {
+    text-align: center;
+    margin-top: 90px;
+    margin-bottom: 20px;
+
+    & ul {
+      display: inline-block;
+
+      margin-left: 0;
+
+      font-size: 12px;
+      color: $grey;
+
+      & > li {
+        display: inline-block;
+
+        &:before {
+          content: "|";
+          margin: 10px;
+        }
+        &:first-child:before {
+          content: none;
+        }
+      }
+    }
+  }
+}
+.docs-note {
+  border: 1px solid $purple;
+  padding: 0 20px;
+  margin-bottom: 20px;
+  background-color: rgba($purple, 0.05);
+  p {
+    margin-top: 20px;
+  }
+}
+
+.privacy {
+  table {
+    border-collapse: collapse;
+    border: 1px solid $midgrey;
+  }
+  th,
+  td {
+    padding: 0 1em;
+    border: 1px solid $midgrey;
+  }
+}

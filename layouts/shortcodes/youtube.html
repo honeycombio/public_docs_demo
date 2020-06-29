@@ -1,0 +1,11 @@
+<iframe id="youtube-{{ .Get "id" }}"
+        src="https://www.youtube.com/embed/{{ .Get "id" }}?rel=0&showinfo=0&modestbranding=1&enablejsapi=1
+              {{- if .Get "autoplay" }}{{ if eq . "true" }}&autoplay=1{{ end }}{{ end -}}
+              {{- if .Get "hq" }}{{ if eq . "true" }}&vq=hd720{{ end }}{{ end -}}"
+        width="{{ with .Get "width" }}{{ . }}{{ else }}100%{{ end }}"
+        height="{{ with .Get "height" }}{{ . }}{{ else }}100%{{ end }}"
+        frameborder="0"
+        gesture="media"
+        allow="encrypted-media"
+        allowfullscreen>
+</iframe>

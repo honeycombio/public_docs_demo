@@ -1,0 +1,12 @@
+<div class="section-list">
+{{ range .Site.Sections.ByWeight }}
+  {{ if .Title }}
+  <a href="{{ .URL }}">
+    <div class="section-title">{{ .Title }}</div>
+    <div class="section-description">
+      {{ .Description }}
+    </div>
+  </a>
+  {{ end }}
+{{ end }}
+</div>

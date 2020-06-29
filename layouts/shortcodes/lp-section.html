@@ -1,0 +1,21 @@
+<div class="full-row">
+  <div class="container">
+    <div class="row align-items-center justify-content-between">
+      {{ if .Get "flip" }}
+        <div class="five-col">
+          {{ .Inner }}
+        </div>
+        <div class="six-col screenshot">
+          <img src="{{ .Get "imgsrc" }}" alt="{{ .Get "title" }}">
+        </div>
+      {{ else }}
+        <div class="six-col screenshot">
+          <img src="{{ .Get "imgsrc" }}" alt="{{ .Get "title" }}" class="screenshot">
+        </div>
+        <div class="five-col">
+          {{ .Inner }}
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</div>

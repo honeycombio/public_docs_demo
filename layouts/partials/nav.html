@@ -1,0 +1,19 @@
+<div>
+  {{ partial "consentToCookiesBanner.html" }}
+  <div id="header" {{ with . }}class="fix-nav {{ . }}"{{ end }}>
+    <div id="nav">
+      <a href="https://www.honeycomb.io"><img src="/images/hcio_logo.svg" alt="Honeycomb Logo"></a>
+      <ul>
+      <li><a href="https://docs.honeycomb.io/">Docs</a></li>
+      <li><a href="https://www.honeycomb.io/why-honeycomb/">Why Honeycomb</a></li>
+      <li><a href="https://www.honeycomb.io/overview/">Product</a></li>
+      <li><a href="https://www.honeycomb.io/pricing/">Pricing</a></li>
+      <li><a href="https://www.honeycomb.io/blog/">Blog</a></li>
+      </ul>
+    </div>
+    <div id="signup">
+      <a href="/login/">Sign In</a>
+      <a href="/signup/" class="btn-large btn-primary">Free Trial</a>
+    </div>
+  </div>
+</div>

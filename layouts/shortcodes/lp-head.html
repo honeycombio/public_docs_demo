@@ -1,0 +1,15 @@
+<div class="full-row">
+  <div class="container">
+    <div class="row align-items-center mobile-reverse">
+      <div class="six-col padding-col">
+        {{ .Inner }}
+        <br />
+        <br />
+        <a href="/signup/" class="btn-large btn-primary">Get Started Now</a>
+      </div>
+      <div class="six-col{{ if .Get "portrait" }} portrait{{ end }}">
+        <img src="{{ .Get "imgsrc" }}" alt="{{ .Get "title" }}">
+      </div>
+    </div>
+  </div>
+</div>

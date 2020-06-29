@@ -1,0 +1,22 @@
+<script type="text/javascript">
+    function saveConsent(){
+        window.Cookies.set("hcCookies", "1", {
+            expires: 365,
+            domain: window.location.hostname == "localhost" ? undefined : ".honeycomb.io",
+        });
+        document.getElementById("cookies-banner").style.display = "none";
+
+        // Add trackers when the consent box is clicked, so we don't have to
+        // wait until the next page load.
+        window.runTagManager && window.runTagManager();
+    }
+</script>
+<div id="cookies-banner">
+    <p>
+        We use cookies or similar technologies to personalize your online experience and tailor marketing to you.
+        Many of our product features require cookies to function properly. Your use of this site and online
+        product constitutes your consent to these personalization technologies. Read
+        our <a href="https://www.honeycomb.io/privacy">Privacy Policy</a> to find out more.
+    </p>
+    <span class="consent-to-cookies" onclick="saveConsent()">X</span>
+</div>

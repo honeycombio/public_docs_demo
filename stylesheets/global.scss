@@ -1,0 +1,355 @@
+$maxWidth: 1024px;
+
+$navHeight: 84px;
+$narrowNavHeight: 65px;
+
+$teal: #1BABAC;
+
+$tangerine: #F7941D;
+$green: #8DC73F;
+$gold: #FDB813;
+$cerulean: #1CB0E8;
+$blue: #079EDB;
+$purple: #AE73C1;
+$grey: #9B9B9B;
+$midgrey: #D4D4D2;
+$combineGrey: #F7F8FA;
+$almostWhite: #FAFCFB;
+
+$shade: #003B53; // TODO Combine: #28283D
+$contentGrey: #454545; // TODO Combine: #000C2F
+
+// TODO: Combine $anchor: #0003ff;
+// TODO: Combine $anchorHover: #00010ff;
+$actionHover: darken($teal, 5%);
+
+//light green border or hr
+$lightborder: #dee6e5;
+
+$action: $teal;
+$warning: $tangerine;
+$codeBgColor: #000C2F;
+$borderColor: #E7E8EC;
+
+$docsSidebarWidthSmall: 50px;
+$docsSidebarWidthMed: 200px;
+$docsSidebarWidthWide: 250px;
+
+// Text effects
+$monospace: "Roboto Mono", monospace;
+
+@mixin setColorAndHover($color, $hoverColor) {
+    color: $color;
+    &:hover {
+        color: $hoverColor;
+    }
+}
+
+@mixin understatedA {
+    a {
+        @include setColorAndHover($contentGrey, $action);
+    }
+}
+
+@mixin bgImage($url, $ext, $width, $height, $hasRetina: false) {
+    background: url($url + $ext) no-repeat;
+    width: $width;
+    height: $height;
+    background-size: $width $height;
+    @if $hasRetina == true {
+        @media (min--moz-device-pixel-ratio: 1.3),
+               (-o-min-device-pixel-ratio: 2.6/2),
+               (-webkit-min-device-pixel-ratio: 1.3),
+               (min-device-pixel-ratio: 1.3),
+               (min-resolution: 1.3dppx) {
+            background-image: url($url + "@2x" + $ext);
+        }
+    }
+}
+
+//treat images and screenshots on the blog the same way
+
+@mixin boxShadow {
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(72,97,97,0.1);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(72,97,97,0.1);
+    box-shadow: 0px 0px 5px 0px rgba(72,97,97,0.1);
+}
+
+@mixin blogImgScreenshot {
+        display: block;
+        margin: 0 auto;
+        border: 1px solid $lightborder;
+        max-width: 100%;
+        padding: 20px 0px;
+}
+
+// https://medium.freecodecamp.com/the-100-correct-way-to-do-css-breakpoints-88d6a5ba1862
+@mixin respond-lt-bigphone {
+    @media (max-width: 375px) { @content; }
+}
+@mixin respond-lt-tablet {
+    @media (max-width: 500px) { @content; }
+}
+@mixin respond-lt-desktop {
+    @media (max-width: 767px) { @content; }
+}
+@mixin respond-gte-desktop {
+    @media (min-width: 768px) { @content; }
+}
+@mixin respond-lt-widescreen {
+    @media (max-width: 1023px) { @content; }
+}
+@mixin respond-gte-widescreen {
+    @media (min-width: 1024px) { @content; }
+}
+
+
+/* Global Base/Reset
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+html {
+    font-size: 62.5%;
+    -webkit-font-variant-ligatures: none;
+    -moz-font-variant-ligatures: none;
+    font-variant-ligatures: none;
+    -webkit-font-feature-settings: 'liga' 0, 'onum' 0, 'kern' 1;
+    -moz-font-feature-settings: 'liga' 0, 'onum' 0, 'kern' 1;
+    -o-font-feature-settings: 'liga' 0, 'onum' 0, 'kern' 1;
+    font-feature-settings: 'liga' 0, 'onum' 0, 'kern' 1;
+}
+
+body {
+    font-size: 1.7em;
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
+    color: $contentGrey;
+    -webkit-font-smoothing: antialiased;
+    padding: 0px;
+    margin: 0px;
+    height:100vh;
+}
+
+ul, li, ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #dee6e5;;
+}
+
+/* Typography
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+h1, h2, h3, h4, h5, h6, p {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 400;
+}
+h1.hero { font-size: 7.2rem; line-height: 9.6rem; font-weight: 300;}
+h1 { font-size: 4.1rem; line-height: 4.8rem; margin-bottom: 2.4rem; }
+h2 { font-size: 2.7rem; line-height: 3.2rem; margin-bottom: 1.6rem; margin-top: 1.6rem; }
+h3 { font-size: 2.1rem; margin-bottom: 1.2rem; margin-top: 1.2rem; }
+p  { font-size: 1.7rem; line-height: 2.4rem;}
+
+h1.homepage {
+    margin-bottom: 3rem
+}
+
+p.subpage {
+    margin-bottom: 2.4rem;
+}
+
+@include respond-lt-desktop {
+    h1.hero { font-size: 4.1rem; line-height: 4.8rem; }
+    h1 { font-size: 2.7rem; line-height: 3.2rem; margin-bottom: 4.8rem;}
+    h2 { font-size: 2.1rem; margin-bottom: 1.2rem; }
+    h3 { font-size: 1.9rem; margin-bottom: 1.2rem; }
+    p  {
+        font-size: 1.7rem;
+        line-height: 2.4rem;
+        color: $contentGrey;
+    }
+}
+
+.strong {
+    font-weight: 500 !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-center p {
+    margin: 0 auto;
+    margin-bottom: 3rem;
+}
+
+.row p {
+    max-width: 1000px;
+}
+
+/* Links
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+a {
+    color: $action; // TODO: Combine $anchor
+    text-decoration: none;
+}
+
+a:hover {
+    color: $actionHover; // TODO: Combine $anchorHover
+}
+
+/* Buttons
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.btn {
+    padding: 12px 24px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.btn-large {
+    padding: 16px 32px;
+    border-radius: 4px;
+    font-size: 1.8rem;
+    font-weight: 400;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+@include respond-lt-tablet {
+    .btn-large {
+        display: block;
+        text-align: center;
+    }
+}
+
+a.btn-primary {
+    background-color: $action;
+    color: white !important;
+    &:hover {
+        background-color: $actionHover;
+    }
+}
+
+a.btn-secondary {
+    background-color: white;
+    color: $action;
+    &:hover {
+        color: $action;
+    }
+}
+
+a.btn-tertiary {
+    border: 1px solid white;
+    color: white;
+}
+
+/* Banner
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+#cookies-banner {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    bottom: 0;
+    background: $gold;
+    padding: 16px;
+    line-height: 24px;
+    p {
+        margin: 0;
+        text-align: left;
+        max-width: 80%;
+    }
+    .consent-to-cookies {
+        position: absolute;
+        right: 6%;
+        top: 16px;
+        cursor: pointer;
+    }
+}
+
+/* Footer
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+#footer {
+    padding-bottom: 96px;
+    margin-top: 96px !important;
+    padding-top: 24px;
+    border-top: 1px solid $borderColor;
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    ul li {
+        list-style: none;
+        line-height: 4.8rem;
+        font-size: 1.7rem;
+        a {
+            color: $contentGrey;
+            &:hover {
+                color: $action;
+            }
+        }
+    }
+}
+
+.footer-company {
+    margin-right: 160px;
+}
+
+.footer-contact {
+    margin-right: 160px;
+}
+
+.footer-legal {
+    text-align: right;
+    flex: 1;
+    a {
+        color: $grey !important;
+    }
+}
+
+@include respond-lt-tablet {
+    #footer {
+        padding: 40px 0px 0px 0px;
+    }
+
+    .footer-company, .footer-contact, .footer-lp {
+        margin-right: 40px;
+        flex: 30%;
+    }
+
+    .footer-legal {
+        flex: 100%;
+        text-align: left;
+        margin-top: 2rem;
+        li:last-child {
+            margin-right: 0px;
+        }
+    }
+}
+
+code {
+    font-family: $monospace;
+    font-size: 1.4rem;
+}
+h1, h2, h3, h4 {
+    code {
+        font-size: inherit;
+    }
+}
+li {
+    code {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+}
+
+@include respond-lt-bigphone {
+    code {
+        font-size: 1.3rem;
+    }
+}

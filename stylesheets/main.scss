@@ -1,0 +1,57 @@
+@import "./global.scss";
+@import "./flexboxgrid.scss";
+@import "./header.scss";
+@import "./pygments.css";
+@import "./sections.scss";
+
+.intercom-chat {
+  cursor: pointer;
+}
+
+svg.i-404 {
+  width: 200px;
+  height: 202px;
+  margin: 0 auto;
+}
+.content-404 h1 {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.content-default {
+  padding-top: 40px;
+  p {
+    margin-bottom: 2.4rem;
+    max-width: inherit;
+  }
+  ul {
+    margin-left: 40px;
+    li {
+      list-style-type: disc;
+    }
+  }
+  li {
+    line-height: 1.7rem;
+    margin-bottom: 1.7rem;
+  }
+}
+
+.inputform {
+  display: block;
+  input {
+    flex-grow: 1;
+    -webkit-flex-grow: 1;
+    background: white;
+    border: 1px solid $borderColor;
+    border-radius: 2px;
+    padding: 0.5em;
+    margin-right: -0.5em;
+    outline: none;
+  }
+  input[type="submit"] {
+    background-color: $green;
+    color: white;
+    letter-spacing: 1px;
+    border: 0;
+    font-weight: 500;
+  }
+}

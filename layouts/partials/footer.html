@@ -1,0 +1,140 @@
+{{ partial "userinfo.html" . }}
+<script type="text/javascript">
+// Attach JS listeners for code toggle blocks
+(function() {
+  function getListener(navLinks, navContents) {
+    return function(e) {
+      e.preventDefault();
+      for (var i = 0; i < navLinks.length; i++) {
+        if (navLinks[i] === this) {
+          navContents[i].className = "active";
+          navLinks[i].className = "active";
+        } else {
+          navContents[i].className = "hidden";
+          navLinks[i].className = "hidden";
+        }
+      }
+    }
+  }
+
+  var navs = document.getElementsByClassName("code-toggle-nav");
+  for (var i = 0; i < navs.length; i++) {
+    var navId = navs[i].id.replace("-nav", "");
+    var navLinks = navs[i].getElementsByTagName("a");
+    var contents = document.getElementById(navs[i].id.replace("-nav", "-content")).children;
+    var listener = getListener(navLinks, contents);
+    for (var j = 0; j < navLinks.length; j++) {
+      navLinks[j].addEventListener("click", listener);
+    }
+  }
+})();
+
+function addGravatar(userInfo) {
+    // we assume the dom is structured thusly:
+    // <span id="gravatar">
+    //   a child of <a href="...">
+
+    var s = document.getElementById("signup");
+    if (!s) {
+        return;
+    }
+    const defaultImageURI = "https://ui.honeycomb.io/static/images/bee.png";
+    s.classList.add("loggedin");
+    s.innerHTML = `<a href="https://ui.honeycomb.io/"><div class="gravatar" style="background-image:url('https://gravatar.com/avatar/${ md5(userInfo.user.email) }?s=44&d=${ encodeURIComponent(defaultImageURI) }')"></div></a>`;
+}
+
+function writeKeyFill(writeKey) {
+    var writeKeyNodes = document.getElementsByClassName("write-key-fill");
+    for (var i = 0; i < writeKeyNodes.length; i++) {
+        writeKeyNodes[i].innerText = writeKey;
+    }
+}
+
+function currentTeamFill(teamName) {
+    var currentTeamNodes = document.getElementsByClassName("current-team-fill");
+    for (var i = 0; i < currentTeamNodes.length; i++) {
+        currentTeamNodes[i].innerText = teamName;
+    }
+}
+
+function hideLoggedInMessages() {
+    // Hide logged in messages if user is not logged in (i.e., does not
+    // have a current team).
+    var messagesForLoggedInUsers = document.getElementsByClassName("show-logged-in");
+    for (var i = 0; i < messagesForLoggedInUsers.length; i++) {
+        messagesForLoggedInUsers[i].style.display = "none";
+    }
+}
+
+
+function fillLoggedInInfo(userInfo) {
+    var currentWriteKey = "YOUR_API_KEY";
+
+    if (userInfo.current_team_slug === "demo") {
+        // Hardcode 'YOUR_API_KEY' for the magic demo team.
+        // (sometimes we will add users to this team but
+        // the write keys are redacted in the UI)
+        //
+        // Also, don't show messages we'd usually show if they're
+        // logged in if the user is currently active on the 'demo'
+        // team.
+        writeKeyFill(currentWriteKey);
+        hideLoggedInMessages();
+        return;
+    }
+
+    // Does it stand for 'error no team', or is it an homage to English
+    // musician Brian Eno? That's for the folks with JS disabled to decide.
+    var currentTeamName = "ENOTEAM";
+
+    for (var i = 0; i < userInfo.teams.length; i++) {
+        var team = userInfo.teams[i];
+        if (team.slug === userInfo.current_team_slug) {
+            currentWriteKey = team.write_keys[0].key;
+            currentTeamName = team.name;
+            break;
+        }
+    }
+
+    writeKeyFill(currentWriteKey);
+    currentTeamFill(currentTeamName);
+}
+
+function unhideLoggedInOnlyContent() {
+  const elts = document.getElementsByClassName("logged-in-only");
+  for (var i = 0; i < elts.length; i++) {
+    elts[i].style.display = "block";
+  }
+}
+
+function customizeDocs(userInfo) {
+    addGravatar(userInfo);
+    fillLoggedInInfo(userInfo);
+    unhideLoggedInOnlyContent();
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    fetchUser().then(customizeDocs).catch( function() {
+        // If this failed, we didn't successfully fetch a logged in user, so
+        // hide the messages meant for logged in users.
+        hideLoggedInMessages();
+    });
+
+    const docsMenu = document.getElementById("docs-sidebar");
+    const menuBtn = document.getElementById("menu-btn");
+    docsMenu.addEventListener("click", function(e) {
+        menuBtn.checked = false;
+    });
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script type="text/javascript">
+docsearch({
+  apiKey: '4db03dda0c72097b986ec692c12af9ab',
+  indexName: 'honeycomb',
+  inputSelector: '#search-docs',
+  debug: false
+});
+</script>
+{{ partial "trackers.html" . }}

@@ -1,0 +1,21 @@
+<script type="application/javascript" src="/main.js?{{ now.Unix }}"></script>
+<script>
+ function fetchUser() {
+     return new Promise(function(resolve, reject) {
+         var userReq = new XMLHttpRequest();
+         userReq.withCredentials = true;
+         userReq.open("GET", App.uiBaseUrl + "/account", true);
+         userReq.setRequestHeader("Accept", "application/json");
+         userReq.onload = function() {
+             resolve(JSON.parse(userReq.response));
+         };
+         userReq.onerror = function(e) {
+             reject(e);
+         };
+         userReq.onabort = function(e) {
+             reject(e);
+         };
+         userReq.send();
+     });
+ }
+</script>
